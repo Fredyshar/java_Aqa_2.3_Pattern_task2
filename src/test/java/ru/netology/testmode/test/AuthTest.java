@@ -1,14 +1,11 @@
 package ru.netology.testmode.test;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import ru.netology.testmode.data.DataGenerator;
-import ru.netology.testmode.data.DataGenerator.Registration;
-
+import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
 import static com.codeborne.selenide.Selenide.open;
 import static ru.netology.testmode.data.DataGenerator.Registration.getRegisteredUser;
@@ -30,8 +27,7 @@ class AuthTest {
         $("[data-test-id='login'] input").setValue(registeredUser.getLogin());
         $("[data-test-id='password'] input").setValue(registeredUser.getPassword());
         $("[data-test-id='action-login']").click();
-        $("#root").shouldHave(Condition.text("Личный кабинет"))
-                .shouldHave(Condition.visible);
+        $(byText("Личный кабинет")).shouldHave(Condition.visible);
     }
 
     @Test
@@ -45,7 +41,6 @@ class AuthTest {
                 .shouldHave(Condition.text("Неверно указан логин или пароль"))
                 .shouldHave(Condition.visible);
     }
-
 
     @Test
     @DisplayName("Should get error message if login with blocked registered user")
